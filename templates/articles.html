@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<h3>Makalaler</h3>
+<hr>
+
+
+{% if articles  %}
+
+
+{% for article in articles %}
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4">
+                <!-- Post title-->
+                <a href="{% url 'articles:detail' article.id %}"><h1 class="fw-bolder mb-1">{{article.title}}</h1></a>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">{{article.author}} Tarafından Oluşturuldu.</div>
+                <p>{{article.created_date}} Tarihinde Oluşturuldu.</p>
+                <!-- Post categories-->
+               <!-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>-->
+            </header>
+            <!-- Preview image figure-->
+
+            {% if article.article_image and article.article_image.name %}
+                <figure class="mb-4">
+                    <img class="img-fluid rounded" src="{{ article.article_image.url }}" alt="..." />
+                </figure>
+            {% endif %}
+
+
+            <!-- Post content-->
+            <section class="mb-5">
+                <p class="fs-5 mb-4">{{article.content |safe}}</p>
+            </section>
+        </article>
+    </div>
+    </div>
+</div>
+
+{% endfor %}
+    
+
+{% else %}
+
+<div class="alert alert-danger">
+    Bu blogta herhangi bir makale bulunmuyor
+</div>
+    
+{% endif %}
+    
+
+
+{% endblock body %}
+    
+
+

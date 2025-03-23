@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+
+<div class="jumbotron text-center">
+    <h3>Django Test</h3>
+    <p>Django Test Aşamasındadır</p>
+</div>
+
+
+{% if request.user.is_authenticated  %}
+    Giriş Yapılmış, {{request.user.username}}
+{% else %}
+    Giriş Yapılmamış.
+{% endif %}
+    
+    
+
+
+
+
+{% endblock body %}
+    

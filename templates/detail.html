@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+    
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4">
+                <!-- Post title-->
+                <h1 class="fw-bolder mb-1">{{article.title}}</h1>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">{{article.author}} Tarafından Oluşturuldu.</div>
+                <p>{{article.created_date}} Tarihinde Oluşturuldu.</p>
+                <!-- Post categories-->
+               <!-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>-->
+            </header>
+            <!-- Preview image figure-->
+            {% if article.article_image %}
+            <figure class="mb-4">
+                <img class="img-fluid rounded" src="{{ article.article_image.url }}" alt="..." />
+            </figure>   
+            {% endif %}
+
+
+            <!-- Post content-->
+             <div class="fs-5 mb-4">
+                {{ article.content|safe }}
+             </div>
+        </article>
+                
+                {% if comments %}
+
+                
+                {% for comment in comments %}
+                    
+
+                <div class="media mb-4 pb-3 border-bottom">
+                    <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" class="mr-3 rounded-circle" alt="Profil Fotoğrafı" width="50" height="50">
+                    <div class="media-body">
+                      <h5 class="mt-0 mb-1">{{comment.comment_author}}</h5>
+                      <small class="text-muted d-block mb-2">{{comment.comment_date}}</small>
+                      {{comment.comment_content}}
+                    </div>
+                  </div>
+
+
+                {% endfor %}
+                    
+
+
+                {% else %}
+
+                <div class="alert alert-danger">
+                    Bu Makaleye herhangi bir yorum yazılmammış, ilk yorumu yapan siz olun.
+                </div>
+
+                {% endif %}
+                    
+                <!-- Comments section-->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <!-- Comment form-->
+                            <form class="mb-4" method="post" action="{% url 'articles:comment' article.id %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">İsim</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="İsminizi Giriniz">
+                                </div>
+                                <label for="exampleFormControlTextarea1">Yorum</label>
+                                <textarea class="form-control" rows="3" placeholder="Bir Yorum Ekle!"></textarea>
+                                <br>
+                                <button class="btn btn-success">Ekle</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+    </div>
+</div>
+
+
+{% endblock body %}
+    
